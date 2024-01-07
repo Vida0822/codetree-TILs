@@ -24,30 +24,24 @@ public class Main {
        int k = 0 ;
        while(true){
             int x = q.peek() ; 
-            if(x >= avg){
+            if(x > avg){
                 break ; 
             }else{
                 q.poll() ;
             }
             k++ ; 
        }
-     //  System.out.println(k) ;
 
        PriorityQueue<Integer> pq = new PriorityQueue<>() ; 
        double sum2 = 0 ;
        for(int x : q){
             pq.add(x) ;
             sum2 += x ;  
-        //    System.out.println(sum2); 
        }
         
        sum2 -= pq.poll() ; 
-      // System.out.println(sum2) ; // 16.0
-      // System.out.println(n-k-1) ;  // 2 
-      // System.out.println(sum2/n-k-1) ; // 0.20000000
      //  System.out.printf("%.2f" , sum2/n-k-1) ;
-       System.out.printf("%.2f" , sum2/(n-k-1)) ; 
-
+       System.out.printf("%.2f" , sum2/(n-k-1)) ; // ※ 나누는 인자가 다항식일때, 괄호로 안묶어주면 맨 앞 인자만 나누기 우선 연산 
 
     }
 }
