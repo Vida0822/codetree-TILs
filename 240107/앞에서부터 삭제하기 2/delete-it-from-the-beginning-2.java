@@ -1,47 +1,42 @@
 import java.util.* ; 
 public class Main {
+    public static final int MAX_N = 100000 ; 
     public static int n ; 
+    public static int[] arr = new int[MAX_N] ; 
+    public static int sumVal ; 
+    public static double maxAvg ; 
+    public static PriorityQueue<Integer> pq = new PriorityQueue<>() ; 
 
     public static void main(String[] args) {
-       Scanner sc = new Scanner(System.in) ;
-       n = sc.nextInt() ;
-
-       // point : 정렬한 뒤엔 숫자 1개밖에 삭제 못한다
-       // 정렬하기 전 k개 삭제할 때 작은 숫자를 최대한 많이 삭제하면 good ! 
-       // part 1. 전체 평균을 구한다 
-       // part 2. 평균보다 큰 값이 나올때까지 queue에서 삭제한다 --> 이게 맞는지 모르겠음 
-       // part 3. 정렬 후 가장 작은 값을 삭제한 후 평균을 구한다   
-
-       Queue<Integer> q = new LinkedList<>() ; 
-       double sum = 0 ;
-       for(int i = 0 ; i < n ; i++){
-            int x = sc.nextInt() ;
-            q.add(x) ; 
-            sum += x ; 
-       }
-       double avg = sum / n ; 
-       
-       int k = 0 ;
-       while(true){
-            int x = q.peek() ; 
-            if(x > avg){
-                break ; 
-            }else{
-                q.poll() ;
-            }
-            k++ ; 
-       }
-
-       PriorityQueue<Integer> pq = new PriorityQueue<>() ; 
-       double sum2 = 0 ;
-       for(int x : q){
-            pq.add(x) ;
-            sum2 += x ;  
-       }
+        Scanner sc = new Scanner(System.in) ;
+        n = sc.nextInt() ;
         
-       sum2 -= pq.poll() ; 
-     //  System.out.printf("%.2f" , sum2/n-k-1) ;
-       System.out.printf("%.2f" , sum2/(n-k-1)) ; // ※ 나누는 인자가 다항식일때, 괄호로 안묶어주면 맨 앞 인자만 나누기 우선 연산 
+        /*
+        마인드 : 
+        (k개 제거 후 남는 숫자 그룹을 뒤에서부터 하나씩 추가해가면서, 
+        그 추가한 값을 pq에 담고 (자동 정렬되어 최솟값 도출)
+        그 최솟값을 도출해 제거한후 계산한 평균값이 
+        현재까지 중 최대 평균값이면 갱신 
+        ) x 숫자를 1개 제거하는 경우까지 반복 
+        */
+        for(int i = 0 ; i < n ; i++){
+            arr[i] = sc.nextInt(); 
+        }
+        pq.add(arr[n-1]);
+        sumVal += arr[n-1] ; // 남는 숫자가 마지막 하나일때 
 
+        for(int i = n-2 ; i >= 1 ; i-- ){
+            // 뒤에서부터 남는 숫자 그룹에 하나씩 추가 --> 최솟값 갱신 
+            sumVal += arr[i] ; 
+            pq.add(arr[i]) ; 
+
+            // 그 추가한 값 반영해서 최솟값 평균 도출 후 갱신 
+            double avg = (double)(sumVal - pq.peek()) /(n-i-1) ; 
+
+            if(maxAvg < avg){
+                maxAvg = avg ; 
+            }
+        }
+        System.out.printf("%.2f", maxAvg) ; 
     }
 }
