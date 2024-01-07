@@ -17,7 +17,7 @@ public class Main {
             operations[i] = sc.next() ; 
         }
         */
-        PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.naturalOrder());
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.reverseOrder());
 
         for(int i = 0 ; i < n ; i++){
          
