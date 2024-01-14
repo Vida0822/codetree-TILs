@@ -35,23 +35,23 @@ public class Main {
                 String S_value = sc.next() ; 
                 Node singleTon = new Node(S_value) ; 
 
-                singleTon.next = cur.next ; 
                 singleTon.prev = cur ; 
+                singleTon.next = cur.next ; 
                 cur.next = singleTon ; 
 
             }else if(command.contains("3")){ // 앞 노드랑 바꾸기
                 if(!(cur.prev == null)){
                     cur.next = cur.prev ; 
-                    cur.prev = cur.next.prev ; 
+                    cur.prev = cur.prev.prev ; 
                     cur.next.prev = cur ; 
                     cur.next.next = cur.next ;     
                 }
             }else if(command.contains("4")){ // 뒤 노드랑 바꾸기 
                 if(!(cur.next == null)){
-                    cur.prev = cur.next ; 
-                    cur.next = cur.prev.next; 
-                    cur.prev.next = cur ; 
-                    cur.prev.prev = cur.prev ; 
+                    cur.prev = cur.next ;  // B : cur.next  --> cur.prev 
+                    cur.next = cur.next.next; // A ' next = 기존 B'next 
+                    cur.prev.next = cur ;  // B' next = A 
+                    cur.prev.prev = cur.prev ;  // B'pre = A'prev 
                 }
             }
             String prev_data = (cur.prev == null)? "(Null)" : cur.prev.data ; 
